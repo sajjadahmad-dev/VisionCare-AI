@@ -1,0 +1,133 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary-emerald: #2d5a27;
+  --secondary-coral: #ff6b6b;
+  --accent-yellow: #ffd93d;
+  --burgundy: #722f37;
+  --text-dark: #2c3e50;
+  --cream: #fff8f0;
+  --sage: #e8f5e8;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    background: linear-gradient(135deg, #fff8f0 0%, #e8f5e8 100%);
+    color: #2c3e50;
+  }
+}
+
+@layer components {
+  .glassmorphism {
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+  }
+
+  .gradient-text {
+    background: linear-gradient(135deg, var(--primary-emerald), var(--secondary-coral));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .floating-animation {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .pulse-glow {
+    animation: pulseGlow 2s ease-in-out infinite alternate;
+  }
+
+  .particle {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    animation: particleFloat 8s linear infinite;
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes pulseGlow {
+  0% {
+    box-shadow: 0 0 20px rgba(255, 107, 107, 0.3);
+    transform: scale(1);
+  }
+  100% {
+    box-shadow: 0 0 40px rgba(255, 107, 107, 0.6);
+    transform: scale(1.05);
+  }
+}
+
+@keyframes particleFloat {
+  0% {
+    transform: translateY(100vh) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+@keyframes eyeBlink {
+  0%,
+  90%,
+  100% {
+    transform: scaleY(1);
+  }
+  95% {
+    transform: scaleY(0.1);
+  }
+}
+
+.eye-blink {
+  animation: eyeBlink 4s ease-in-out infinite;
+}
+
+.chat-bubble-user {
+  background: linear-gradient(135deg, var(--primary-emerald), #3d7c47);
+  color: white;
+}
+
+.chat-bubble-ai {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(45, 90, 39, 0.1);
+  color: var(--text-dark);
+}
+
+.typing-indicator {
+  animation: typing 1.4s infinite ease-in-out;
+}
+
+@keyframes typing {
+  0%,
+  60%,
+  100% {
+    transform: translateY(0);
+  }
+  30% {
+    transform: translateY(-10px);
+  }
+}
