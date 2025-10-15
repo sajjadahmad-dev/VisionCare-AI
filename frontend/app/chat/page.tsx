@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { askQuestion, analyzeImage, getDetectionResultUrl } from "@/lib/api"
+import { getUserType } from "@/lib/auth"
 
 interface Message {
   id: string
@@ -17,6 +18,7 @@ interface Message {
   content: string
   image?: string
   timestamp: Date
+  timeString?: string
   analysis?: {
     condition: string
     confidence: number
@@ -57,6 +59,15 @@ function formatMarkdownToHtml(markdown: string): string {
 }
 
 export default function ChatPage() {
+  // Hydration-safe dashboard link
+  const [dashboardHref, setDashboardHref] = useState("/");
+
+  useEffect(() => {
+    const userType = getUserType();
+    if (userType === "doctor") setDashboardHref("/doctor/dashboard");
+    else if (userType === "user") setDashboardHref("/dashboard");
+    else setDashboardHref("/");
+  }, []);
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "1",
@@ -80,15 +91,53 @@ export default function ChatPage() {
     scrollToBottom()
   }, [messages])
 
+  // Booking intent detection and flow
+  const [bookingStep, setBookingStep] = useState<null | "doctor" | "date" | "time" | "confirm">(null)
+  const [bookingDoctor, setBookingDoctor] = useState<any>(null)
+  const [bookingDate, setBookingDate] = useState("")
+  const [bookingTime, setBookingTime] = useState("")
+  const [availableDoctors, setAvailableDoctors] = useState<any[]>([])
+
   const handleSendMessage = async () => {
     if (!inputMessage.trim() && !selectedImage) return
 
+    // Booking intent detection (simple keyword match)
+    if (
+      /book.*appointment|appointment.*book|see.*doctor|doctor.*see|visit.*doctor|doctor.*visit/i.test(
+        inputMessage
+      )
+    ) {
+      setBookingStep("doctor")
+      setInputMessage("")
+      setIsTyping(false)
+      // Fetch doctors
+      try {
+        const res = await fetch("/api/doctors")
+        const data = await res.json()
+        setAvailableDoctors(data.doctors || [])
+      } catch {
+        setAvailableDoctors([])
+      }
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: Date.now().toString(),
+          type: "ai",
+          content: "Let's book an appointment! Please select a doctor from the list below.",
+          timestamp: new Date(),
+        },
+      ])
+      return
+    }
+
+    const now = new Date();
     const userMessage: Message = {
       id: Date.now().toString(),
       type: "user",
       content: inputMessage || "Image uploaded for analysis",
       image: selectedImage || undefined,
-      timestamp: new Date(),
+      timestamp: now,
+      timeString: now.toLocaleTimeString(),
     }
 
     setMessages((prev) => [...prev, userMessage])
@@ -115,19 +164,39 @@ export default function ChatPage() {
         const yolo = res.yolo_detection?.detections?.[0]
         const gpt = res.gpt_analysis || {}
 
-        // Get output image URL if file_id is present
+        // Get output image URL from yolo_detection.detection_path if present, else from file_id
         let outputImageUrl: string | undefined = undefined
-        if (res.file_id) {
+        if (res.yolo_detection && res.yolo_detection.detection_path) {
+          // Remove any leading "/backend/" from detection_path
+          let cleanPath = res.yolo_detection.detection_path.replace(/^\/?backend\//, "");
+          outputImageUrl = cleanPath.startsWith("http")
+            ? cleanPath
+            : `${process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000"}/${cleanPath.replace(/^\/+/, "")}`;
+        } else if (res.file_id) {
           outputImageUrl = getDetectionResultUrl(res.file_id)
         }
 
+        // Compose a detailed message with YOLO and GPT results
+        let detectionText = "";
+        if (yolo) {
+          detectionText += `<strong>YOLO Detection:</strong> ${yolo.class || "Unknown"}<br/>Confidence: ${
+            yolo.confidence ? Math.round(yolo.confidence * 100) : 0
+          }%<br/>`;
+        }
+        if (gpt.analysis) {
+          detectionText += `<strong>AI Analysis:</strong> ${gpt.analysis}<br/>`;
+        }
+        if (gpt.recommendations) {
+          detectionText += `<strong>Recommendations:</strong> ${gpt.recommendations}`;
+        }
+
+        const aiNow = new Date();
         aiResponse = {
           id: (Date.now() + 1).toString(),
           type: "ai",
-          content: gpt.analysis
-            ? "I've analyzed your eye image. Here are my findings:"
-            : "Image analysis complete.",
-          timestamp: new Date(),
+          content: detectionText || "Image analysis complete.",
+          timestamp: aiNow,
+          timeString: aiNow.toLocaleTimeString(),
           image: outputImageUrl,
           analysis: yolo
             ? {
@@ -143,11 +212,13 @@ export default function ChatPage() {
       } else {
         // Call backend for text Q&A
         const res = await askQuestion(inputMessage)
+        const aiNow = new Date();
         aiResponse = {
           id: (Date.now() + 1).toString(),
           type: "ai",
           content: res.answer || "Sorry, I couldn't process your question.",
-          timestamp: new Date(),
+          timestamp: aiNow,
+          timeString: aiNow.toLocaleTimeString(),
         }
       }
 
@@ -214,7 +285,7 @@ export default function ChatPage() {
         transition={{ duration: 0.5 }}
       >
         <div className="flex items-center space-x-3 mb-8">
-          <Link href="/">
+          <Link href={dashboardHref}>
             <Button variant="ghost" size="sm" className="p-2">
               <ArrowLeft className="w-4 h-4" />
             </Button>
@@ -263,7 +334,7 @@ export default function ChatPage() {
         >
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
-              <Link href="/" className="lg:hidden">
+              <Link href={dashboardHref} className="lg:hidden">
                 <Button variant="ghost" size="sm" className="p-2">
                   <ArrowLeft className="w-4 h-4" />
                 </Button>
@@ -298,20 +369,82 @@ export default function ChatPage() {
                       message.type === "user" ? "chat-bubble-user ml-auto" : "chat-bubble-ai"
                     }`}
                   >
+                    {/* Show YOLO detection image with label */}
                     {message.image && (
-                      <div className="mb-3">
+                      <div className="mb-3 text-center">
+                        <div className="font-semibold text-[#2D5A27] mb-1">YOLO Detection Output</div>
                         <img
                           src={message.image || "/placeholder.svg"}
-                          alt="Uploaded eye image"
-                          className="rounded-lg max-w-xs w-full h-auto"
+                          alt="YOLO detection result"
+                          className="rounded-lg max-w-xs w-full h-auto border-2 border-[#2D5A27]"
                         />
                       </div>
                     )}
                     {message.type === "ai" ? (
-                      <div
-                        className="text-sm leading-relaxed"
-                        dangerouslySetInnerHTML={{ __html: formatMarkdownToHtml(message.content) }}
-                      />
+                      <div>
+                        {/* If the message is an AI analysis, try to parse and render as a card */}
+                        {(() => {
+  // Try to parse JSON from message.content if present (even if in a code block or prefixed)
+  let analysisObj: any = null;
+  let content = message.content.trim();
+
+  // 1. If content contains a code block with json, extract it
+  const codeBlockMatch = content.match(/```json([\s\S]*?)```/);
+  if (codeBlockMatch) {
+    content = codeBlockMatch[1].trim();
+  } else {
+    // 2. If content contains a JSON object anywhere, extract it
+    const jsonMatch = content.match(/{[\s\S]*}/);
+    if (jsonMatch) {
+      content = jsonMatch[0];
+    }
+  }
+
+  try {
+    if (content.startsWith("{")) {
+      analysisObj = JSON.parse(content);
+    }
+  } catch {}
+
+  if (analysisObj && analysisObj.condition) {
+    return (
+      <div className="bg-white/80 rounded-lg p-4 shadow border mb-2 max-w-lg">
+        <div className="mb-4">
+          <span className="block text-xs font-semibold text-gray-500 uppercase mb-1">Analysis</span>
+          <div className="text-base text-[#2C3E50] font-medium">{analysisObj.analysis}</div>
+        </div>
+        <div className="mb-4">
+          <span className="block text-xs font-semibold text-gray-500 uppercase mb-1">Recommendations</span>
+          <div className="text-base text-[#2D5A27]">{analysisObj.recommendations}</div>
+        </div>
+        <div className="mb-4">
+          <span className="block text-xs font-semibold text-gray-500 uppercase mb-1">Medical Advice</span>
+          <div className="text-base text-[#2C3E50]">{analysisObj.medical_advice}</div>
+        </div>
+        <div>
+          <span className="block text-xs font-semibold text-gray-500 uppercase mb-1">Risk Level</span>
+          <span className={`inline-block px-3 py-1 rounded-full text-xs font-bold ${
+            analysisObj.risk_level === "low"
+              ? "bg-green-100 text-green-800"
+              : analysisObj.risk_level === "medium"
+              ? "bg-yellow-100 text-yellow-800"
+              : "bg-red-100 text-red-800"
+          }`}>
+            {analysisObj.risk_level}
+          </span>
+        </div>
+      </div>
+    );
+  }
+                          // Otherwise, render as HTML
+                          return (
+                            <div
+                              className="text-sm leading-relaxed"
+                              dangerouslySetInnerHTML={{ __html: formatMarkdownToHtml(message.content) }}
+                            />
+                          );
+                        })()}
+                      </div>
                     ) : (
                       <p className="text-sm leading-relaxed">{message.content}</p>
                     )}
@@ -370,7 +503,7 @@ export default function ChatPage() {
                     )}
                   </div>
                   <p className="text-xs text-[#2C3E50] opacity-50 mt-1 px-4">
-                    {message.timestamp.toLocaleTimeString()}
+                    {message.timeString}
                   </p>
                 </div>
               </motion.div>

@@ -6,7 +6,7 @@ import { Eye, Brain, Zap, Shield, ChevronRight, Star, Quote, Menu, X } from "luc
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { getDoctors, bookAppointment, getAppointments } from "@/lib/api"
+
 
 export default function HomePage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -113,10 +113,11 @@ export default function HomePage() {
               <a href="#testimonials" className="text-[#2C3E50] hover:text-[#2D5A27] transition-colors duration-200">
                 Testimonials
               </a>
-              <Link href="/chat">
-                <Button className="bg-[#2D5A27] hover:bg-[#3D7C47] text-white px-6 py-2 rounded-full transition-all duration-200 hover:scale-105">
-                  Start Analysis
-                </Button>
+              <Link href="/auth/login">
+                <Button variant="outline" className="mr-2 border-[#FF6B6B] text-[#FF6B6B] hover:bg-[#FF6B6B] hover:text-white transition-all duration-300 rounded-full">Login</Button>
+              </Link>
+              <Link href="/auth/signup">
+                <Button variant="outline" className="mr-2 border-[#2D5A27] text-[#2D5A27] hover:bg-[#2D5A27] hover:text-white transition-all duration-300 rounded-full">Register</Button>
               </Link>
             </nav>
 
@@ -141,10 +142,11 @@ export default function HomePage() {
                 <a href="#testimonials" className="text-[#2C3E50] hover:text-[#2D5A27] transition-colors duration-200">
                   Testimonials
                 </a>
-                <Link href="/chat">
-                  <Button className="bg-[#2D5A27] hover:bg-[#3D7C47] text-white px-6 py-2 rounded-full w-full">
-                    Start Analysis
-                  </Button>
+                <Link href="/auth/login">
+                  <Button variant="outline" className="w-full border-[#FF6B6B] text-[#FF6B6B] hover:bg-[#FF6B6B] hover:text-white transition-all duration-300 rounded-full">Login</Button>
+                </Link>
+                <Link href="/auth/signup">
+                  <Button variant="outline" className="w-full border-[#2D5A27] text-[#2D5A27] hover:bg-[#2D5A27] hover:text-white transition-all duration-300 rounded-full">Register</Button>
                 </Link>
               </div>
             </motion.nav>
@@ -182,10 +184,17 @@ export default function HomePage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
+            className="flex flex-col sm:flex-row gap-4 justify-center"
           >
-            <Link href="/chat">
+            <Link href="/auth/login">
               <Button className="bg-[#FF6B6B] hover:bg-[#FF5252] text-white px-8 py-4 text-lg rounded-full pulse-glow transition-all duration-300 hover:scale-110 group">
-                Start Your Analysis
+                Login
+                <ChevronRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform duration-200" />
+              </Button>
+            </Link>
+            <Link href="/auth/signup">
+              <Button variant="outline" className="border-[#FF6B6B] text-[#FF6B6B] hover:bg-[#FF6B6B] hover:text-white px-8 py-4 text-lg rounded-full transition-all duration-300 hover:scale-110 group">
+                Register
                 <ChevronRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform duration-200" />
               </Button>
             </Link>
@@ -349,8 +358,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Doctor & Appointment Section */}
-      <section className="py-20 bg-gradient-to-r from-[#2D5A27]/10 to-[#FF6B6B]/10">
+      {/* Highlights Section */}
+      <section id="highlights" className="py-20 bg-gradient-to-r from-[#2D5A27]/5 to-[#FF6B6B]/5">
         <div className="container mx-auto px-6">
           <motion.div
             className="text-center mb-16"
@@ -359,14 +368,77 @@ export default function HomePage() {
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 gradient-text font-poppins">Book an Appointment</h2>
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 gradient-text font-poppins">Why Choose EyeCare AI?</h2>
             <p className="text-xl text-[#2C3E50] opacity-80 max-w-2xl mx-auto">
-              Connect with our top eye specialists for a professional consultation.
+              Discover the advantages that make our AI-powered eye care solution stand out
             </p>
           </motion.div>
-          <DoctorAppointmentSection />
+
+          <div className="grid md:grid-cols-3 gap-8">
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              viewport={{ once: true }}
+              whileHover={{ scale: 1.05 }}
+            >
+              <Card className="glassmorphism border-0 h-full hover:shadow-2xl transition-all duration-300">
+                <CardContent className="p-8 text-center">
+                  <div className="mb-6 relative">
+                    <div className="w-16 h-16 mx-auto bg-gradient-to-br from-[#2D5A27] to-[#3D7C47] rounded-full flex items-center justify-center floating-animation">
+                      <Shield className="w-8 h-8 text-white" />
+                    </div>
+                  </div>
+                  <h3 className="text-xl font-semibold mb-4 text-[#2C3E50] font-poppins">Secure & Private</h3>
+                  <p className="text-[#2C3E50] opacity-80">Your health data is protected with enterprise-grade security and privacy measures.</p>
+                </CardContent>
+              </Card>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              viewport={{ once: true }}
+              whileHover={{ scale: 1.05 }}
+            >
+              <Card className="glassmorphism border-0 h-full hover:shadow-2xl transition-all duration-300">
+                <CardContent className="p-8 text-center">
+                  <div className="mb-6 relative">
+                    <div className="w-16 h-16 mx-auto bg-gradient-to-br from-[#2D5A27] to-[#3D7C47] rounded-full flex items-center justify-center floating-animation">
+                      <Zap className="w-8 h-8 text-white" />
+                    </div>
+                  </div>
+                  <h3 className="text-xl font-semibold mb-4 text-[#2C3E50] font-poppins">Early Detection</h3>
+                  <p className="text-[#2C3E50] opacity-80">Identify potential issues before they become serious with our advanced detection algorithms.</p>
+                </CardContent>
+              </Card>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              viewport={{ once: true }}
+              whileHover={{ scale: 1.05 }}
+            >
+              <Card className="glassmorphism border-0 h-full hover:shadow-2xl transition-all duration-300">
+                <CardContent className="p-8 text-center">
+                  <div className="mb-6 relative">
+                    <div className="w-16 h-16 mx-auto bg-gradient-to-br from-[#2D5A27] to-[#3D7C47] rounded-full flex items-center justify-center floating-animation">
+                      <Eye className="w-8 h-8 text-white" />
+                    </div>
+                  </div>
+                  <h3 className="text-xl font-semibold mb-4 text-[#2C3E50] font-poppins">User-Friendly Interface</h3>
+                  <p className="text-[#2C3E50] opacity-80">Intuitive design makes it easy for anyone to upload images and get instant results.</p>
+                </CardContent>
+              </Card>
+            </motion.div>
+          </div>
         </div>
       </section>
+
+
 
       {/* Footer */}
       <footer className="bg-[#2D5A27] text-white py-12">
@@ -392,234 +464,4 @@ export default function HomePage() {
   )
 }
 
-// DoctorAppointmentSection component
-function DoctorAppointmentSection() {
-  const [doctors, setDoctors] = useState<any[]>([])
-  const [loadingDoctors, setLoadingDoctors] = useState(true)
-  const [form, setForm] = useState({
-    patient_name: "",
-    contact_number: "",
-    preferred_date: "",
-    preferred_time: "",
-    concern: "",
-  })
-  const [selectedDoctor, setSelectedDoctor] = useState<number | null>(null)
-  const [bookingStatus, setBookingStatus] = useState<string | null>(null)
-  const [appointments, setAppointments] = useState<any[]>([])
-  const [loadingAppointments, setLoadingAppointments] = useState(false)
-  const [doctorError, setDoctorError] = useState<string | null>(null)
 
-  useEffect(() => {
-    getDoctors()
-      .then((res) => {
-        setDoctors(res.doctors || [])
-        setLoadingDoctors(false)
-      })
-      .catch(() => setLoadingDoctors(false))
-  }, [])
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setForm({ ...form, [e.target.name]: e.target.value })
-  }
-
-  const handleBook = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setBookingStatus(null)
-    setDoctorError(null)
-    console.log("Form submit, selectedDoctor:", selectedDoctor, "type:", typeof selectedDoctor)
-    if (!selectedDoctor) {
-      setDoctorError("Please select a doctor before booking an appointment.")
-      return
-    }
-    try {
-      const data = {
-        ...form,
-        doctor_id: selectedDoctor,
-      }
-      console.log("Booking appointment with data:", data)
-      const res = await bookAppointment(data)
-      setBookingStatus("Appointment booked successfully!")
-      setForm({
-        patient_name: "",
-        contact_number: "",
-        preferred_date: "",
-        preferred_time: "",
-        concern: "",
-      })
-      setSelectedDoctor(null)
-      // Refresh appointments
-      fetchAppointments()
-    } catch (err) {
-      setBookingStatus("Failed to book appointment. Please try again.")
-    }
-  }
-
-  const fetchAppointments = () => {
-    setLoadingAppointments(true)
-    getAppointments()
-      .then((res) => {
-        console.log("Fetched appointments:", res.appointments)
-        setAppointments(res.appointments || [])
-        setLoadingAppointments(false)
-      })
-      .catch(() => setLoadingAppointments(false))
-  }
-
-  useEffect(() => {
-    fetchAppointments()
-  }, [])
-
-  return (
-    <div className="grid md:grid-cols-2 gap-12">
-      {/* Doctor List */}
-      <div>
-        <h3 className="text-2xl font-semibold mb-4 text-[#2C3E50] font-poppins">Available Doctors</h3>
-        {loadingDoctors ? (
-          <p>Loading doctors...</p>
-        ) : (
-          <div className="space-y-4">
-            {doctors.map((doc: any) => (
-              <Card
-                key={doc.id}
-                className={`glassmorphism border-0 p-4 cursor-pointer ${
-                  selectedDoctor === doc.id ? "ring-2 ring-[#2D5A27]" : ""
-                }`}
-                onClick={() => {
-                  const docIdNum = typeof doc.id === "string" ? parseInt(doc.id, 10) : doc.id
-                  console.log("Doctor card clicked, doc.id:", doc.id, "type:", typeof doc.id, "parsed:", docIdNum)
-                  setSelectedDoctor(docIdNum)
-                }}
-              >
-                <CardContent>
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h4 className="font-semibold text-[#2C3E50]">{doc.name}</h4>
-                      <p className="text-[#2C3E50] opacity-70 text-sm">{doc.specialty}</p>
-                      <p className="text-[#2C3E50] opacity-60 text-xs">Experience: {doc.experience}</p>
-                      <div className="flex">
-                        {[...Array(Math.round(doc.rating))].map((_, i) => (
-                          <Star key={i} className="w-4 h-4 text-[#FFD93D] fill-current" />
-                        ))}
-                      </div>
-                    </div>
-                    <div>
-                      <span className="text-xs text-[#2D5A27] font-semibold">Slots:</span>
-                      <div className="flex flex-wrap gap-1 mt-1">
-                        {doc.available_slots.map((slot: string, idx: number) => (
-                          <span
-                            key={idx}
-                            className="bg-[#2D5A27]/10 text-[#2D5A27] px-2 py-1 rounded text-xs"
-                          >
-                            {slot}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        )}
-      </div>
-      {/* Appointment Form & List */}
-      <div>
-        <h3 className="text-2xl font-semibold mb-4 text-[#2C3E50] font-poppins">Book Appointment</h3>
-        <form className="space-y-4" onSubmit={handleBook}>
-          <input
-            type="text"
-            name="patient_name"
-            value={form.patient_name}
-            onChange={handleInputChange}
-            placeholder="Your Name"
-            className="w-full px-4 py-2 rounded border border-[#2D5A27]/20"
-            required
-          />
-          <input
-            type="text"
-            name="contact_number"
-            value={form.contact_number}
-            onChange={handleInputChange}
-            placeholder="Contact Number"
-            className="w-full px-4 py-2 rounded border border-[#2D5A27]/20"
-            required
-          />
-          <input
-            type="date"
-            name="preferred_date"
-            value={form.preferred_date}
-            onChange={handleInputChange}
-            className="w-full px-4 py-2 rounded border border-[#2D5A27]/20"
-            required
-          />
-          <input
-            type="time"
-            name="preferred_time"
-            value={form.preferred_time}
-            onChange={handleInputChange}
-            className="w-full px-4 py-2 rounded border border-[#2D5A27]/20"
-            required
-          />
-          <textarea
-            name="concern"
-            value={form.concern}
-            onChange={handleInputChange}
-            placeholder="Describe your concern (optional)"
-            className="w-full px-4 py-2 rounded border border-[#2D5A27]/20"
-            rows={2}
-          />
-          <Button
-            type="submit"
-            className="bg-[#2D5A27] hover:bg-[#3D7C47] text-white px-6 py-2 rounded-full"
-            disabled={!selectedDoctor}
-          >
-            Book Appointment
-          </Button>
-          {doctorError && <p className="text-sm mt-2 text-red-600">{doctorError}</p>}
-          {bookingStatus && <p className="text-sm mt-2">{bookingStatus}</p>}
-        </form>
-        <div className="mt-8">
-          <h4 className="text-lg font-semibold mb-2 text-[#2C3E50]">Your Appointments</h4>
-          <Button
-            size="sm"
-            variant="outline"
-            className="mb-2"
-            onClick={fetchAppointments}
-            disabled={loadingAppointments}
-          >
-            {loadingAppointments ? "Refreshing..." : "Refresh"}
-          </Button>
-          <div className="space-y-2">
-            {appointments.length === 0 ? (
-              <p className="text-sm text-[#2C3E50] opacity-60">No appointments found.</p>
-            ) : (
-              appointments.map((appt: any) => (
-                <Card key={appt.appointment_id} className="glassmorphism border-0 p-3">
-                  <CardContent>
-                    <div className="flex justify-between items-center">
-                      <div>
-                        <p className="font-semibold">{appt.patient_name}</p>
-                        <p className="text-xs text-[#2C3E50] opacity-70">
-                          {appt.preferred_date} at {appt.preferred_time}
-                        </p>
-                        <p className="text-xs text-[#2C3E50] opacity-60">
-                          Doctor: {appt.doctor?.name || "Assigned"}
-                        </p>
-                        <p className="text-xs text-[#2C3E50] opacity-60">
-                          Status: {appt.status}
-                        </p>
-                      </div>
-                      <div>
-                        <span className="text-xs text-[#2D5A27]">{appt.created_at?.slice(0, 10)}</span>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))
-            )}
-          </div>
-        </div>
-      </div>
-    </div>
-  )
-}

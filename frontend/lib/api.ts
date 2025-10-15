@@ -1,4 +1,5 @@
 const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000";
+import { getAuthHeaders } from "./auth";
 
 // Analyze Image (POST /analyze-image)
 export async function analyzeImage(
@@ -15,6 +16,7 @@ export async function analyzeImage(
 
   const res = await fetch(`${BACKEND_URL}/analyze-image`, {
     method: "POST",
+    headers: getAuthHeaders(),
     body: formData,
   });
   if (!res.ok) throw new Error(await res.text());
@@ -30,7 +32,10 @@ export function getDetectionResultUrl(file_id: string) {
 export async function askQuestion(question: string) {
   const res = await fetch(`${BACKEND_URL}/ask-question`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: { 
+      "Content-Type": "application/json",
+      ...getAuthHeaders()
+    },
     body: JSON.stringify({ question }),
   });
   if (!res.ok) throw new Error(await res.text());
@@ -39,7 +44,9 @@ export async function askQuestion(question: string) {
 
 // Get Doctors (GET /doctors)
 export async function getDoctors() {
-  const res = await fetch(`${BACKEND_URL}/doctors`);
+  const res = await fetch(`${BACKEND_URL}/doctors`, {
+    headers: getAuthHeaders(),
+  });
   if (!res.ok) throw new Error(await res.text());
   return res.json();
 }
@@ -51,10 +58,11 @@ export async function bookAppointment(data: {
   preferred_date: string;
   preferred_time: string;
   concern?: string;
+  doctor_id: string;
 }) {
   const res = await fetch(`${BACKEND_URL}/book-appointment`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json", ...getAuthHeaders() },
     body: JSON.stringify(data),
   });
   if (!res.ok) throw new Error(await res.text());
@@ -63,7 +71,9 @@ export async function bookAppointment(data: {
 
 // Get Appointments (GET /appointments)
 export async function getAppointments() {
-  const res = await fetch(`${BACKEND_URL}/appointments`);
+  const res = await fetch(`${BACKEND_URL}/appointments`, {
+    headers: getAuthHeaders(),
+  });
   if (!res.ok) throw new Error(await res.text());
   return res.json();
 }
