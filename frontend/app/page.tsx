@@ -452,9 +452,41 @@ export default function HomePage() {
               VisionCare AI is a diagnostic aid and should not replace professional medical consultation. Always consult
               with a qualified healthcare provider for medical advice.
             </p>
+            
+            {/* Developer Information */}
+            <div className="mb-6">
+              <h4 className="text-lg font-semibold mb-4 text-white">Developed by</h4>
+              <p className="text-white/80 mb-2">Sajjad Ahmad</p>
+              <p className="text-white/60 text-sm mb-4">BS Computer Science, University of Agriculture, Faisalabad</p>
+              <div className="flex justify-center space-x-4">
+                <a 
+                  href="https://github.com/sajjadahmad-dev" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-white/60 hover:text-white transition-colors duration-200"
+                >
+                  GitHub
+                </a>
+                <a 
+                  href="https://linkedin.com/in/sajjadahmad-dev" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-white/60 hover:text-white transition-colors duration-200"
+                >
+                  LinkedIn
+                </a>
+                <a 
+                  href="mailto:sajjadahmad.code@gmail.com" 
+                  className="text-white/60 hover:text-white transition-colors duration-200"
+                >
+                  Email
+                </a>
+              </div>
+            </div>
+            
             <div className="border-t border-white/20 pt-6">
               <p className="text-white/60 text-sm">
-                © 2024 VisionCare AI. All rights reserved. | Medical Device Registration Pending
+                © 2024 VisionCare AI. All rights reserved. | Medical Device Registration Pending | FYP Project
               </p>
             </div>
           </div>

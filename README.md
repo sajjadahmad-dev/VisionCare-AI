@@ -199,10 +199,26 @@ This project includes a `docker-compose.yml` file to run both backend and fronte
 
 ---
 
-## Contact
+## Developer Information
 
-For questions or support, please contact the project maintainer.
+**Sajjad Ahmad**  
+*BS Computer Science*  
+*University of Agriculture, Faisalabad*  
+
+- **GitHub**: [sajjadahmad-dev](https://github.com/sajjadahmad-dev)
+- **LinkedIn**: [sajjadahmad-dev](https://linkedin.com/in/sajjadahmad-dev)
+- **Email**: sajjadahmad.code@gmail.com
 
 ---
 
-_EyeCare AI © 2025_
+## License
+This project is developed as part of Final Year Project (FYP) requirements.
+
+---
+
+## Support
+For technical issues or questions, please check the API documentation at `/docs` or contact the developer.
+
+---
+
+_VisionCare AI © 2025_
