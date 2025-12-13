@@ -5,6 +5,89 @@ VisionCare AI is an AI-powered diagnostic tool designed for early detection and 
 
 ---
 
+## Quick Start Guide
+
+### Prerequisites
+- Python 3.8+
+- Node.js 18+
+- MongoDB Atlas account (or local MongoDB)
+- Git
+
+### 1. Clone the Repository
+```bash
+git clone https://github.com/sajjadahmad-dev/VisionCare-AI.git
+cd VisionCare-AI
+```
+
+### 2. Backend Setup
+
+#### Install Python Dependencies
+```bash
+cd backend
+pip install -r requirements.txt
+```
+
+#### Environment Configuration
+Create a `.env` file in the `backend` directory:
+```env
+# AI/ML API Configuration
+OPENAI_API_KEY=your_openai_api_key_here
+
+# Database Configuration
+MONGODB_URL=mongodb+srv://your_mongodb_atlas_connection_string
+
+# JWT Configuration
+JWT_SECRET=your-secret-key-change-in-production
+
+# Email Configuration
+EMAIL_ADDRESS=your_email@gmail.com
+EMAIL_PASSWORD=your_app_password
+```
+
+#### Run Backend
+```bash
+python main.py
+```
+Backend will start on `http://localhost:8000`
+
+### 3. Frontend Setup
+
+#### Install Dependencies
+```bash
+cd frontend
+npm install
+# or if using pnpm
+pnpm install
+```
+
+#### Run Frontend
+```bash
+npm run dev
+# or
+pnpm dev
+```
+Frontend will start on `http://localhost:3000` (or 3001 if 3000 is busy)
+
+### 4. Access the Application
+- **Frontend**: http://localhost:3000
+- **Backend API**: http://localhost:8000
+- **API Documentation**: http://localhost:8000/docs
+
+### Default Credentials
+- **Admin Login**: Password = `admin123`
+- **MongoDB**: Configure your Atlas connection string
+
+### Features Overview
+- ✅ User registration and authentication
+- ✅ AI-powered conjunctiva disease detection
+- ✅ Progress tracking and history
+- ✅ Doctor appointment system
+- ✅ Admin dashboard for doctor approval
+- ✅ Email notifications
+- ✅ AI chatbot for eye health queries
+
+---
+
 ## Backend
 
 ### Overview
