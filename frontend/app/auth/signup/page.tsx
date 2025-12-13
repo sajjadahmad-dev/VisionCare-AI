@@ -68,14 +68,14 @@ export default function SignupPage() {
             <Link href="/" className="inline-block mb-4">
               <div className="flex items-center justify-center space-x-3">
                 <Eye className="w-8 h-8 text-[#2D5A27]" />
-                <span className="text-2xl font-bold gradient-text font-poppins">EyeCare AI</span>
+                <span className="text-2xl font-bold gradient-text font-poppins">VisionCare AI</span>
               </div>
             </Link>
             <CardTitle className="text-2xl font-bold text-[#2C3E50] font-poppins">
               Create Account
             </CardTitle>
             <p className="text-[#2C3E50] opacity-70">
-              Join EyeCare AI for advanced eye health analysis
+              Join VisionCare AI for advanced eye health analysis
             </p>
           </CardHeader>
 

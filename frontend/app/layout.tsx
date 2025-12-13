@@ -11,7 +11,7 @@ const poppins = Poppins({
 })
 
 export const metadata: Metadata = {
-  title: "EyeCare AI - Advanced Eye Disease Detection",
+  title: "VisionCare AI - Intelligent Conjunctiva Disease Detection",
   description: "AI-Powered Computer Vision for Early Diagnosis of Eye Conjunctiva Diseases",
     icons: {
         icon: '/favicon_1.png',

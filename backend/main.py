@@ -40,7 +40,7 @@ from openai import OpenAI
 from dotenv import load_dotenv
 load_dotenv()
 
-app = FastAPI(title="Eye Health AI Agent", version="2.0.0")
+app = FastAPI(title="VisionCare AI", version="2.0.0")
 
 # CORS middleware
 app.add_middleware(
@@ -118,7 +118,7 @@ async def startup_db_client():
     global mongodb_client, db
     try:
         mongodb_client = AsyncIOMotorClient(MONGODB_URL)
-        db = mongodb_client.eye_health_db
+        db = mongodb_client.visioncare_ai
         # Test the connection
         await mongodb_client.admin.command('ping')
         print("Connected to MongoDB successfully")
@@ -348,12 +348,12 @@ async def send_email(to_email: str, subject: str, body: str, html: bool = False)
 
 async def send_welcome_email(email: str, full_name: str):
     """Send welcome email to new user"""
-    subject = "Welcome to Eye Health AI Agent!"
+    subject = "Welcome to VisionCare AI!"
     body = f"""
     <html>
         <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
             <div style="max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f9f9f9;">
-                <h2 style="color: #2c3e50;">Welcome to Eye Health AI Agent! 👁️</h2>
+                <h2 style="color: #2c3e50;">Welcome to VisionCare AI! 👁️</h2>
                 <p>Dear {full_name},</p>
                 <p>Thank you for creating an account with us! We're excited to help you monitor and maintain your eye health.</p>
 
@@ -371,7 +371,7 @@ async def send_welcome_email(email: str, full_name: str):
                 <p>Your eye health journey starts here. Upload your first image to get started!</p>
 
                 <p style="margin-top: 30px;">Best regards,<br>
-                <strong>Eye Health AI Team</strong></p>
+                <strong>VisionCare AI Team</strong></p>
 
                 <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #ddd; font-size: 12px; color: #777;">
                     <p>This is an automated message. Please do not reply to this email.</p>
@@ -384,14 +384,14 @@ async def send_welcome_email(email: str, full_name: str):
 
 async def send_doctor_welcome_email(email: str, full_name: str):
     """Send welcome email to new doctor (account under review)"""
-    subject = "Your Doctor Account is Under Review - Eye Health AI Agent"
+    subject = "Your Doctor Account is Under Review - VisionCare AI"
     body = f"""
     <html>
         <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
             <div style="max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f9f9f9;">
                 <h2 style="color: #2c3e50;">Doctor Account Submitted for Review 👨‍⚕️</h2>
                 <p>Dear Dr. {full_name},</p>
-                <p>Thank you for registering as a doctor on Eye Health AI Agent! Your account and documents have been received and are now under review by our administrators.</p>
+                <p>Thank you for registering as a doctor on VisionCare AI! Your account and documents have been received and are now under review by our administrators.</p>
                 <div style="background-color: #fff3cd; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #ffc107;">
                     <h3 style="color: #3498db;">What Happens Next?</h3>
                     <ul>
@@ -402,7 +402,7 @@ async def send_doctor_welcome_email(email: str, full_name: str):
                 </div>
                 <p style="color: #2c3e50;">You will not be able to access the doctor dashboard until your account is approved.</p>
                 <p style="margin-top: 30px;">Best regards,<br>
-                <strong>Eye Health AI Team</strong></p>
+                <strong>VisionCare AI Team</strong></p>
                 <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #ddd; font-size: 12px; color: #777;">
                     <p>This is an automated message. Please do not reply to this email.</p>
                 </div>
@@ -436,7 +436,7 @@ async def send_doctor_approval_email(email: str, full_name: str):
                 <p>You can now access all doctor features and begin helping patients with their eye health needs.</p>
 
                 <p style="margin-top: 30px;">Best regards,<br>
-                <strong>Eye Health AI Team</strong></p>
+                <strong>VisionCare AI Team</strong></p>
             </div>
         </body>
     </html>
@@ -468,7 +468,7 @@ async def send_doctor_rejection_email(email: str, full_name: str, notes: Optiona
                 <p>If you have any questions or need clarification, please don't hesitate to contact our support team.</p>
 
                 <p style="margin-top: 30px;">Best regards,<br>
-                <strong>Eye Health AI Team</strong></p>
+                <strong>VisionCare AI Team</strong></p>
             </div>
         </body>
     </html>
@@ -477,7 +477,7 @@ async def send_doctor_rejection_email(email: str, full_name: str, notes: Optiona
 
 async def send_analysis_result_email(email: str, full_name: str, analysis: Dict, file_id: str):
     """Send analysis results via email"""
-    subject = "Your Eye Health Analysis Results"
+    subject = "Your VisionCare AI Analysis Results"
     
     condition = analysis.get('condition', 'Unknown')
     severity = analysis.get('severity', 'Unknown')
@@ -487,7 +487,7 @@ async def send_analysis_result_email(email: str, full_name: str, analysis: Dict,
     <html>
         <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
             <div style="max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f9f9f9;">
-                <h2 style="color: #2c3e50;">Your Eye Health Analysis Results 📋</h2>
+                <h2 style="color: #2c3e50;">Your VisionCare AI Analysis Results 📋</h2>
                 <p>Dear {full_name},</p>
                 <p>Your recent eye image analysis has been completed. Here are the results:</p>
                 
@@ -510,7 +510,7 @@ async def send_analysis_result_email(email: str, full_name: str, analysis: Dict,
                 <p style="margin-top: 30px;">Visit your dashboard to view detailed results and track your progress.</p>
                 
                 <p style="margin-top: 30px;">Best regards,<br>
-                <strong>Eye Health AI Team</strong></p>
+                <strong>VisionCare AI Team</strong></p>
             </div>
         </body>
     </html>

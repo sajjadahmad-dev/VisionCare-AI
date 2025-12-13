@@ -291,7 +291,7 @@ export default function ChatPage() {
             </Button>
           </Link>
           <Eye className="w-6 h-6 text-[#2D5A27]" />
-          <span className="text-lg font-semibold gradient-text font-poppins">EyeCare AI</span>
+          <span className="text-lg font-semibold gradient-text font-poppins">VisionCare AI</span>
         </div>
 
         <div className="space-y-4">

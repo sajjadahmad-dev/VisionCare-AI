@@ -131,7 +131,7 @@ export default function DoctorDashboard() {
             <div className="flex items-center space-x-4">
               <Link href="/" className="flex items-center space-x-3">
                 <Eye className="w-8 h-8 text-[#2D5A27]" />
-                <span className="text-2xl font-bold gradient-text font-poppins">EyeCare AI</span>
+                <span className="text-2xl font-bold gradient-text font-poppins">VisionCare AI</span>
               </Link>
               <div className="hidden md:block">
                 <h1 className="text-lg font-semibold text-[#2C3E50]">Doctor Dashboard</h1>

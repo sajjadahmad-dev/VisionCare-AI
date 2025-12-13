@@ -1,13 +1,33 @@
 fastapi==0.116.1
+uvicorn==0.30.1
+python-dotenv==1.1.1
 python-multipart
+
+# AI / ML
+ultralytics==8.3.89
+opencv-contrib-python==4.11.0.86
+numpy>=1.23.0,<2.0.0
+Pillow==10.3.0
+
+# LLM / Agents
 langchain==0.3.27
 langchain_openai==0.3.28
 langgraph==0.5.4
-numpy>=1.23.0,<2.0.0
-opencv-contrib-python==4.11.0.86
-Pillow==10.3.0
-pydantic==2.11.7
-python-dotenv==1.1.1
+httpx==0.24.1
+requests==2.31.0
+
+# Database
+motor==4.3.3
+pymongo==4.7.1
+
+# Auth & Security
+bcrypt
+passlib==1.7.4
+PyJWT==2.8.0
+email-validator==2.0.0.post3
+
+# Async / Utilities
+aiofiles==23.1.0
 typing_extensions==4.14.1
-ultralytics==8.3.89
-uvicorn==0.30.1
+
+

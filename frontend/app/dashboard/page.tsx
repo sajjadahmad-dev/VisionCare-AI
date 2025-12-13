@@ -108,7 +108,7 @@ export default function DashboardPage() {
           <div className="flex items-center space-x-4">
             <Link href="/" className="flex items-center space-x-3">
               <Eye className="w-6 h-6 text-[#2D5A27]" />
-              <span className="text-lg font-semibold gradient-text font-poppins">EyeCare AI</span>
+              <span className="text-lg font-semibold gradient-text font-poppins">VisionCare AI</span>
             </Link>
             <div className="hidden md:flex items-center space-x-2 text-[#2C3E50] opacity-70">
               <User className="w-4 h-4" />

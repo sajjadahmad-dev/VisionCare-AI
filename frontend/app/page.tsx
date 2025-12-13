@@ -53,7 +53,7 @@ export default function HomePage() {
     {
       name: "Dr. Sarah Chen",
       role: "Ophthalmologist",
-      content: "EyeCare AI has revolutionized our diagnostic process. The accuracy is remarkable.",
+      content: "VisionCare AI has revolutionized our diagnostic process. The accuracy is remarkable.",
       rating: 5,
     },
     {
@@ -65,7 +65,7 @@ export default function HomePage() {
     {
       name: "Dr. Emily Watson",
       role: "Medical Director",
-      content: "The speed and precision of EyeCare AI allows us to help more patients effectively.",
+      content: "The speed and precision of VisionCare AI allows us to help more patients effectively.",
       rating: 5,
     },
   ]
@@ -102,7 +102,7 @@ export default function HomePage() {
                 <Eye className="w-8 h-8 text-[#2D5A27] eye-blink" />
                 <div className="absolute inset-0 bg-[#FF6B6B] rounded-full opacity-20 pulse-glow" />
               </div>
-              <span className="text-2xl font-bold gradient-text font-poppins">EyeCare AI</span>
+              <span className="text-2xl font-bold gradient-text font-poppins">VisionCare AI</span>
             </motion.div>
 
             {/* Desktop Navigation */}
@@ -368,7 +368,7 @@ export default function HomePage() {
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 gradient-text font-poppins">Why Choose EyeCare AI?</h2>
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 gradient-text font-poppins">Why Choose VisionCare AI?</h2>
             <p className="text-xl text-[#2C3E50] opacity-80 max-w-2xl mx-auto">
               Discover the advantages that make our AI-powered eye care solution stand out
             </p>
@@ -446,15 +446,15 @@ export default function HomePage() {
           <div className="text-center">
             <div className="flex items-center justify-center space-x-3 mb-6">
               <Eye className="w-8 h-8" />
-              <span className="text-2xl font-bold font-poppins">EyeCare AI</span>
+              <span className="text-2xl font-bold font-poppins">VisionCare AI</span>
             </div>
             <p className="text-white/80 mb-6 max-w-2xl mx-auto">
-              EyeCare AI is a diagnostic aid and should not replace professional medical consultation. Always consult
+              VisionCare AI is a diagnostic aid and should not replace professional medical consultation. Always consult
               with a qualified healthcare provider for medical advice.
             </p>
             <div className="border-t border-white/20 pt-6">
               <p className="text-white/60 text-sm">
-                © 2024 EyeCare AI. All rights reserved. | Medical Device Registration Pending
+                © 2024 VisionCare AI. All rights reserved. | Medical Device Registration Pending
               </p>
             </div>
           </div>

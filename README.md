@@ -1,7 +1,7 @@
-# EyeCare AI - Advanced Eye Conjunctiva Disease Detection
+# VisionCare AI - Intelligent Conjunctiva Disease Detection and Monitoring System
 
 ## Project Overview
-EyeCare AI is an AI-powered diagnostic tool designed for early detection of eye conjunctiva diseases using advanced computer vision and natural language processing techniques. The system consists of a backend API built with FastAPI that leverages YOLO for image detection and GPT-4o for AI analysis, and a modern frontend built with Next.js for user interaction, image upload, and appointment booking.
+VisionCare AI is an AI-powered diagnostic tool designed for early detection and monitoring of conjunctiva diseases using advanced computer vision and natural language processing techniques. The system consists of a backend API built with FastAPI that leverages YOLO for image detection and GPT-4o for AI analysis, and a modern frontend built with Next.js for user interaction, image upload, and appointment booking.
 
 ---
 
