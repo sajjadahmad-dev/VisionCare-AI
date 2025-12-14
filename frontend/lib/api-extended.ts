@@ -219,3 +219,13 @@ export async function updateAppointmentStatus(appointmentId: string, status: str
   if (!res.ok) throw new Error(await res.text());
   return res.json();
 }
+
+export async function updatePrescription(appointmentId: string, prescription: string) {
+  const res = await fetch(`${BACKEND_URL}/doctor/appointments/${appointmentId}/prescription`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json", ...getAuthHeaders() },
+    body: JSON.stringify({ prescription }),
+  });
+  if (!res.ok) throw new Error(await res.text());
+  return res.json();
+}

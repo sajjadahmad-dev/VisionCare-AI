@@ -19,6 +19,7 @@ interface Appointment {
   status: string
   concern?: string
   created_at: string
+  prescription?: string
 }
 
 export default function AppointmentsPage() {
@@ -82,6 +83,11 @@ export default function AppointmentsPage() {
                       {apt.concern && (
                         <div className="text-sm text-[#2C3E50] mt-1">
                           <span className="font-semibold">Notes:</span> {apt.concern}
+                        </div>
+                      )}
+                      {apt.prescription && (
+                        <div className="text-sm text-[#2C3E50] mt-1">
+                          <span className="font-semibold">Prescription:</span> {apt.prescription}
                         </div>
                       )}
                     </div>

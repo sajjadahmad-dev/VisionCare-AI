@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { getDoctorAppointments, updateAppointmentStatus } from "@/lib/api-extended"
+import { getDoctorAppointments, updateAppointmentStatus, updatePrescription } from "@/lib/api-extended"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 
@@ -42,17 +42,7 @@ export default function DoctorAppointmentsPage() {
 
   const handleSavePrescription = async (appointmentId: string) => {
     try {
-      const res = await fetch(`/doctor/appointments/${appointmentId}/prescription`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          ...(typeof window !== "undefined" && localStorage.getItem("eye_health_token")
-            ? { Authorization: `Bearer ${localStorage.getItem("eye_health_token")}` }
-            : {}),
-        },
-        body: JSON.stringify({ prescription: prescriptionText }),
-      });
-      if (!res.ok) throw new Error(await res.text());
+      await updatePrescription(appointmentId, prescriptionText);
       setEditingPrescription(null);
       setPrescriptionText("");
       // Refresh appointments
