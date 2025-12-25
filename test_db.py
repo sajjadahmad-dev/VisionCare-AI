@@ -14,12 +14,13 @@ async def test_db(url, name):
 
 async def main():
     # Test first connection string
-    url1 = 'mongodb://atlas-sql-693dd528fa951f0d3a541c77-j10mmn.a.query.mongodb.net/eyecare_ai?ssl=true&authSource=admin'
+    url1 = '.'
     await test_db(url1, 'Atlas SQL Connection')
 
     # Test second connection string (with password embedded)
-    url2 = 'mongodb+srv://sajjadahmadcode_db_user:Y2ySSo55Ja4bYKNamongodb+srv://sajjadahmadcode_db_user:@cluster0.gr5hmtd.mongodb.net/?appName=Cluster0'
+    url2 = '.'
     await test_db(url2, 'Embedded Password Connection')
 
 if __name__ == "__main__":
+
     asyncio.run(main())
