@@ -4,7 +4,7 @@ import os
 
 async def test_db():
     try:
-        mongodb_url = os.getenv('MONGODB_URL', 'mongodb+srv://sajjadahmadcode_db_user:Y2ySSo55Ja4bYKNa@cluster0.gr5hmtd.mongodb.net/eyecare_ai?retryWrites=true&w=majority')
+        mongodb_url = os.getenv('MONGODB_URL', '')
         print(f"Testing connection to: {mongodb_url}")
         client = AsyncIOMotorClient(mongodb_url)
         db = client.eyecare_ai
@@ -15,4 +15,5 @@ async def test_db():
         print(f'❌ Database connection failed: {e}')
 
 if __name__ == "__main__":
+
     asyncio.run(test_db())
